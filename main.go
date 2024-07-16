@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"io"
 	"log"
 	"os"
@@ -30,6 +30,22 @@ func cat(path ...string) string {
 
 }
 
+func rm(path ...string) error {
+
+	var err error
+	for _, file := range path {
+
+		err = os.Remove(file)
+
+		if err != nil {
+			log.Fatalf("ERROR: %q", err)
+			break
+		}
+
+	}
+
+	return err
+}
+
 func main() {
-	fmt.Println(cat(`C:\Users\andre\Desktop\Projects\Go\linwin\test_dir\test_file.txt`))
 }
