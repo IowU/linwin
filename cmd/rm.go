@@ -19,13 +19,30 @@ var cmdRm = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
+		recursive, _ := cmd.Flags().GetBool("recursive")
+
 		for _, item := range args {
 
-			err := os.Remove(item)
+			if recursive == true {
+				err := os.RemoveAll(item)
 
-			if err != nil {
-				log.Fatalf("ERROR: %v", err)
+				if err != nil {
+					log.Fatalf("ERROR: %v", err)
+				}
+
+			} else {
+
+				err := os.Remove(item)
+
+				if err != nil {
+					log.Fatalf("ERROR: %v", err)
+				}
 			}
 		}
+
 	},
 }
+
+// func BoolP(name, shorthand string, value bool, usage string) *bool
+
+var f = cmdRm.Flags().BoolP("recursive", "r", false, "Enables or not a recursive removal of all items under the specified path if it is a directory")
