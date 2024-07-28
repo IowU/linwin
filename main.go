@@ -2,50 +2,33 @@ package main
 
 import (
 	// "fmt"
-	"io"
-	"log"
-	"os"
-	"strings"
+	"linwin/cmd"
+	// "io"
+	// "log"
+	// "os"
+	// "strings"
 )
 
-// Prints the full contents of the specified files.
-// Supports multiple files as input
-func cat(path ...string) string {
+// TODO: return errors when an error occurs and handle them
+// in the main function
+// TODO: implement flags as -r, -f etc.
+// func rm(path ...string) error {
 
-	var result []string
+// 	var err error
+// 	for _, file := range path {
 
-	for _, item := range path {
-		o, err := os.Open(item)
+// 		err = os.Remove(file)
 
-		if err != nil {
-			log.Fatalf("ERROR: %v", err)
-		}
+// 		if err != nil {
+// 			log.Fatalf("ERROR: %q", err)
+// 			break
+// 		}
 
-		b, err := io.ReadAll(o)
-		result = append(result, string(b))
+// 	}
 
-	}
-
-	return strings.Join(result, "\r\n")
-
-}
-
-func rm(path ...string) error {
-
-	var err error
-	for _, file := range path {
-
-		err = os.Remove(file)
-
-		if err != nil {
-			log.Fatalf("ERROR: %q", err)
-			break
-		}
-
-	}
-
-	return err
-}
+// 	return err
+// }
 
 func main() {
+	cmd.Execute()
 }
