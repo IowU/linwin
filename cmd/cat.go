@@ -37,7 +37,7 @@ var cmdCat = &cobra.Command{
 				log.Fatalf("ERROR: %v", err)
 			}
 		}
-
-		fmt.Println(strings.Join(result, "\r\n"))
+		fmt.Fprintln(cmd.OutOrStdout(), strings.Join(result, ""))
+		// fmt.Println(strings.Join(result, "\r\n"))
 	},
 }
