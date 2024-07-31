@@ -39,6 +39,5 @@ var cmdCat = &cobra.Command{
 		}
 
 		fmt.Println(strings.Join(result, "\r\n"))
-
 	},
 }
