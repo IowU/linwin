@@ -38,6 +38,8 @@ var cmdCat = &cobra.Command{
 			}
 		}
 
-		fmt.Println(strings.Join(result, "\r\n"))
+		//Used this instead of println to make testing easier
+		fmt.Fprintln(cmd.OutOrStdout(), strings.Join(result, "\r\n"))
+		// fmt.Println(strings.Join(result, "\r\n"))
 	},
 }
