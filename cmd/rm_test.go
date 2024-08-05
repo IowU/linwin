@@ -25,9 +25,9 @@ func TestRm(t *testing.T) {
 		args: []string{"rm", `..\test_dir\removable_test_file.txt`},
 	}
 
-	// multipleFiles := test{
-	// 	args: []string{"rm", `..\test_dir\removable_\test_file.txt`, `..\test_dir\removable_test_file_2.txt`},
-	// }
+	multipleFiles := test{
+		args: []string{"rm", `..\test_dir\removable_test_file.txt`, `..\test_dir\removable_test_file_2.txt`},
+	}
 
 	t.Run("Removes a single file", func(t *testing.T) {
 		file, err := os.Create(oneFile.args[1])
@@ -49,9 +49,33 @@ func TestRm(t *testing.T) {
 
 	})
 
-	// t.Run("Removes multiple file", func(t *testing.T) {
-	// 	cmd := rootCmd
-	// 	cmd.SetArgs(multipleFiles.args)
-	// 	cmd.Execute()
-	// })
+	t.Run("Removes multiple files", func(t *testing.T) {
+		file1, err1 := os.Create(multipleFiles.args[1])
+		file2, err2 := os.Create(multipleFiles.args[2])
+
+		//Close the file or it won't be available for later interaction
+		file1.Close()
+		file2.Close()
+
+		if err1 != nil {
+			log.Fatalf("ERROR: %s", err1)
+		}
+
+		if err2 != nil {
+			log.Fatalf("ERROR: %s", err2)
+		}
+
+		cmd := rootCmd
+		cmd.SetArgs(multipleFiles.args)
+		cmd.Execute()
+
+		if _, err := os.Stat(multipleFiles.args[1]); err == nil {
+			log.Fatalf("ERROR: the file %s still exists", multipleFiles.args[1])
+
+		}
+
+		if _, err := os.Stat(multipleFiles.args[2]); err == nil {
+			log.Fatalf("ERROR: the file %s still exists", multipleFiles.args[2])
+		}
+	})
 }
